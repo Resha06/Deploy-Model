@@ -40,7 +40,7 @@ st.dataframe(df.head())
 
 # --- Expectation of columns (adjust mapping for your dataset) ---
 st.markdown("**Expected columns (if different, edit the column names in app.py):**")
-st.write("`['Gender','Married','Dependents','Education','Self_Employed','ApplicantIncome','CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History','Property_Area','Loan_Status']`")
+st.write("`['Gender','Married','Dependents','Education','Self_Employed','Applicant_Income','Coapplicant_Income','Loan_Amount','Loan_Amount_Term','Credit_History','Property_Area','Loan_Status']`")
 
 # Check whether required columns exist; if not show a helpful message and stop
 required_cols = [
@@ -175,5 +175,6 @@ if submit:
     st.metric("Probability of Approval", f"{proba:.2f}")
     st.write("Model prediction:", "✅ Approved" if pred==1 else "❌ Not Approved")
     st.write("Note: This is a simple model trained on your dataset. For production you should validate, tune hyperparameters, and handle imbalanced classes.")
+
 
 
