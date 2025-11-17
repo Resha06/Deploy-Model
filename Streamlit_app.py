@@ -43,8 +43,20 @@ st.markdown("**Expected columns (if different, edit the column names in app.py):
 st.write("`['Gender','Married','Dependents','Education','Self_Employed','ApplicantIncome','CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History','Property_Area','Loan_Status']`")
 
 # Check whether required columns exist; if not show a helpful message and stop
-required_cols = ['Gender','Married','Dependents','Education','Self_Employed','ApplicantIncome',
-                 'CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History','Property_Area','Loan_Status']
+required_cols = [
+    'Gender',
+    'Married',
+    'Dependents',
+    'Education',
+    'Self_Employed',
+    'Applicant_Income',
+    'Coapplicant_Income',
+    'Loan_Amount',
+    'Loan_Amount_Term',
+    'Credit_History',
+    'Property_Area',
+    'Loan_Status'
+]
 missing = [c for c in required_cols if c not in df.columns]
 if missing:
     st.warning(f"Dataset is missing columns: {missing}. You can still proceed, but edit the code to match your column names.")
@@ -58,8 +70,10 @@ if 'Loan_Status' in df.columns:
         # if your values are other strings, adjust mapping above
 
 # select features and target (edit these if your dataset differs)
-feature_cols = ['Gender','Married','Dependents','Education','Self_Employed','ApplicantIncome',
-                'CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History','Property_Area']
+feature_cols = [
+    "Gender", "Married", "Dependents", "Education", "Self_Employed",
+    "Applicant_Income", "Coapplicant_Income", "Loan_Amount",
+    "Loan_Amount_Term", "Credit_History", "Property_Area"]
 target_col = 'Loan_Status'
 
 if target_col not in df.columns:
@@ -161,3 +175,4 @@ if submit:
     st.metric("Probability of Approval", f"{proba:.2f}")
     st.write("Model prediction:", "✅ Approved" if pred==1 else "❌ Not Approved")
     st.write("Note: This is a simple model trained on your dataset. For production you should validate, tune hyperparameters, and handle imbalanced classes.")
+
