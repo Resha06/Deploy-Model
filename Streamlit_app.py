@@ -85,12 +85,12 @@ y = df[target_col].astype(int).copy()
 
 # Basic cleaning: replace '?' with NaN and coerce numeric
 X.replace('?', np.nan, inplace=True)
-for col in ['ApplicantIncome','CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History']:
+for col in ['Applicant_Income','Coapplicant_Income','Loan_Amount','Loan_Amount_Term','Credit_History']:
     if col in X.columns:
         X[col] = pd.to_numeric(X[col], errors='coerce')
 
 # Define columns for preprocessing
-numeric_features = [c for c in X.columns if X[c].dtype in [np.float64, np.int64] or c in ['ApplicantIncome','CoapplicantIncome','LoanAmount','Loan_Amount_Term','Credit_History']]
+numeric_features = [c for c in X.columns if X[c].dtype in [np.float64, np.int64] or c in ['Applicant_Income','Coapplicant_Income','Loan_Amount','Loan_Amount_Term','Credit_History']]
 categorical_features = [c for c in X.columns if c not in numeric_features]
 
 # Pipelines
@@ -143,18 +143,18 @@ st.text(classification_report(y_test, y_pred, digits=3))
 st.header("Predict loan eligibility for a single applicant")
 with st.form("applicant_form"):
     # Create input widgets for each feature
-    gender = st.selectbox("Gender", options=['Male','Female'])
-    married = st.selectbox("Married", options=['Yes','No'])
-    dependents = st.selectbox("Dependents", options=['0','1','2','3+'])
-    education = st.selectbox("Education", options=['Graduate','Not Graduate'])
-    self_emp = st.selectbox("Self Employed", options=['Yes','No'])
-    applicant_income = st.number_input("Applicant Income", min_value=0.0, value=2500.0, step=100.0)
-    coapplicant_income = st.number_input("Coapplicant Income", min_value=0.0, value=0.0, step=100.0)
-    loan_amount = st.number_input("Loan Amount (in thousands)", min_value=0.0, value=100.0, step=10.0)
-    loan_term = st.number_input("Loan Amount Term (in days/months)", min_value=0.0, value=360.0, step=12.0)
-    credit_history = st.selectbox("Credit History (1 = good, 0 = bad)", options=[1.0, 0.0])
-    property_area = st.selectbox("Property Area", options=['Urban','Semiurban','Rural'])
-    submit = st.form_submit_button("Predict")
+    Gender = st.selectbox("Gender", options=['Male','Female'])
+    Married = st.selectbox("Married", options=['Yes','No'])
+    Dependents = st.selectbox("Dependents", options=['0','1','2','3+'])
+    Education = st.selectbox("Education", options=['Graduate','Not Graduate'])
+    Self_emp = st.selectbox("Self Employed", options=['Yes','No'])
+    Applicant_income = st.number_input("Applicant Income", min_value=0.0, value=2500.0, step=100.0)
+    Coapplicant_income = st.number_input("Coapplicant Income", min_value=0.0, value=0.0, step=100.0)
+    Loan_amount = st.number_input("Loan Amount (in thousands)", min_value=0.0, value=100.0, step=10.0)
+    Loan_term = st.number_input("Loan Amount Term (in days/months)", min_value=0.0, value=360.0, step=12.0)
+    Credit_history = st.selectbox("Credit History (1 = good, 0 = bad)", options=[1.0, 0.0])
+    Property_area = st.selectbox("Property Area", options=['Urban','Semiurban','Rural'])
+    Submit = st.form_submit_button("Predict")
 
 if submit:
     applicant_df = pd.DataFrame([{
@@ -163,9 +163,9 @@ if submit:
         'Dependents': dependents,
         'Education': education,
         'Self_Employed': 'Yes' if self_emp == 'Yes' else 'No',
-        'ApplicantIncome': applicant_income,
-        'CoapplicantIncome': coapplicant_income,
-        'LoanAmount': loan_amount,
+        'Applicant_Income': applicant_income,
+        'Coapplicant_Income': coapplicant_income,
+        'Loan_Amount': loan_amount,
         'Loan_Amount_Term': loan_term,
         'Credit_History': credit_history,
         'Property_Area': property_area
@@ -175,4 +175,5 @@ if submit:
     st.metric("Probability of Approval", f"{proba:.2f}")
     st.write("Model prediction:", "✅ Approved" if pred==1 else "❌ Not Approved")
     st.write("Note: This is a simple model trained on your dataset. For production you should validate, tune hyperparameters, and handle imbalanced classes.")
+
 
