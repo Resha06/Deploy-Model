@@ -99,10 +99,12 @@ numeric_transformer = Pipeline(steps=[
     ('scaler', StandardScaler())
 ])
 
-categorical_transformer = Pipeline(steps=[
-    ('imputer', SimpleImputer(strategy='most_frequent')),
-    ('onehot', OneHotEncoder(handle_unknown='ignore', sparse=False))
-])
+preprocessor = ColumnTransformer(
+    transformers=[
+        ('num', numeric_transformer, numeric_features),
+        ('cat', categorical_transformer, categorical_features)
+    ]
+)
 
 preprocessor = ColumnTransformer(
     transformers=[
@@ -175,6 +177,7 @@ if submit:
     st.metric("Probability of Approval", f"{proba:.2f}")
     st.write("Model prediction:", "✅ Approved" if pred==1 else "❌ Not Approved")
     st.write("Note: This is a simple model trained on your dataset. For production you should validate, tune hyperparameters, and handle imbalanced classes.")
+
 
 
 
